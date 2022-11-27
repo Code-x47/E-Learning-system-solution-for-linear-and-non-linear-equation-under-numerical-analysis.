@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+
+        <style>
+            *{
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                overflow-x: hidden;
+            }
+
+            body{
+                width: 100%;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                background: radial-gradient(circle, #2cb32c,  #0f9a0f, #008000);
+                font-family: sans-serif;
+            }
+
+
+            .equationSec{
+                width: 60%;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-top: 100px;
+                padding: 40px 0px 40px;
+                border: 1px solid white;
+                color: white;
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            .equationSec .heading{
+                width: 62%;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                margin-bottom: 50px;
+            }
+
+            .equationSec .heading>h1{
+                font-size: xx-large;
+                margin-bottom: 10px;
+                color: #003131;
+            }
+
+            .equationSec .heading>hr{
+                width: 30%;
+                margin-bottom: 2px;
+            }
+
+            .equationSec .heading .lastHr{
+                margin-bottom: 10px;
+            }
+
+            .equationSec .mathsSec{
+                width: 100%;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                margin-bottom: 30px;
+            }
+
+            .equationSec .mathsSec>h1{
+                font-size: xx-large;
+                font-weight: normal;
+            }
+
+            .equationSec .mathsSec .numBox{
+                width: 50px;
+                height: 50px;
+                margin-right: 5px;
+                border: 2px solid black;
+                font-size: xx-large;
+                padding-left: 10px;
+            }
+
+            .equationSec .mathsSec .signBox{
+                width: auto;
+                height: auto;
+                margin: 0px 10px;
+                font-size: xx-large;
+                padding-left: 3px;
+            }
+
+
+
+            .equationSec .twoNumbers{
+                width: 62%;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                margin-bottom: 40px;
+            }
+
+            .equationSec .twoNumbers>h2{
+                margin-bottom: 10px;
+                color: #003131;
+            }
+
+            .equationSec .twoNumbers>section{
+                width: auto;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: xx-large;
+            }
+
+            .equationSec .twoNumbers>section>input{
+                width: 40px;
+                height: 40px;
+                margin-right: 5px;
+                border: 2px solid black;
+                font-size: x-large;
+                padding-left: 10px;
+            }
+
+
+            .equationSec .buttonSec{
+                width: 100%;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .equationSec .buttonSec>button{
+                width: 20%;
+                height: 50px;
+                /* background-color: #218686; */
+            }
+
+
+
+            /* Solution section */
+
+            .solutionSec{
+                width: 50%;
+                min-height: 0px;
+                background-color: white;
+                color: black;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                transition: 1s;
+                border-top: 10px solid black;
+                border-bottom: 10px solid black;
+                margin-bottom: 50px;                  
+            }
+
+            .solutionSec>h1{
+                margin-bottom: 20px;
+            }
+
+            .solutionSec>p{
+
+            }
+
+
+
+        </style>
+    </head>
+    <body>
+        
+        <section class="equationSec">
+
+            <section class="heading">
+                <h1>Equation Calculator</h1>
+                <hr>
+                <hr class="lastHr">
+                <p>For solving Non-linear equation using Bisection method in Numerical analysis</p>
+            </section>
+
+            <section class="mathsSec">
+                <input type="text" class="numBox" id="x3" value="1">
+                <h1>X <sup>3</sup></h1>
+
+                <span class="signBox">+</span>
+
+                <input type="text" class="numBox" id="x2" value="0">
+                <h1>X <sup>2</sup></h1>
+
+                <span class="signBox">+</span>
+
+                <input type="text" class="numBox" id="x1" value="-1">
+                <h1>X <sup>1</sup></h1>
+
+                <span class="signBox">+</span>
+
+                <input type="text" class="numBox" id="x0" value="-1">
+
+            </section>
+
+            <section class="twoNumbers">
+                <h2>Two Numbers:</h2>
+                <section>
+                    <input type="text" id="numOne" value="1"> 
+                    <span>,&nbsp;</span> 
+                    <input type="text" id="numTwo" value="2">
+                </section>
+            </section>
+
+            <section class="buttonSec">
+                <button onclick="show()">SOLVE</button>
+            </section>
+        </section>
+
+        <section class="solutionSec" id="answerSheet">
+
+            <h1>Solution:</h1>
+
+            <p id="here">
+                
+
+            </p>
+        </section>
+        
+    </body>
+
+    <script>
+
+        function equation(x3, x2, x1, x0, num){
+            return parseFloat(((x3)*(Math.pow(num, 3)) + (x2)*(Math.pow(num, 2)) + (x1)*(num) + (x0)).toFixed(6))
+        }
+
+        function times(num1, num2){
+            return num1* num2
+        }
+
+        function numAvg(num1, num2){
+            return (num1 + num2)/2
+        }
+
+
+        function show(){
+            
+            var x3 = parseFloat(document.getElementById("x3").value)
+            var x2 = parseFloat(document.getElementById("x2").value)
+            var x1 = parseFloat(document.getElementById("x1").value)
+            var x0 = parseFloat(document.getElementById("x0").value)
+
+            var num1 = parseFloat(document.getElementById("numOne").value)
+            var num2 = parseFloat(document.getElementById("numTwo").value)
+
+
+
+            var Fa0 = equation(x3, x2, x1, x0, num1)
+            var Fb0 = equation(x3, x2, x1, x0, num2)
+
+            var Fa0Fb0 = parseFloat((Fa0*Fb0).toFixed(6))
+
+            var m1 = numAvg(num1, num2)
+
+            var Fm1 = equation(x3, x2, x1, x0, m1)
+
+            var Fm1Fa0 = parseFloat((Fm1*Fa0).toFixed(6))
+
+            var b1 = m1
+
+
+            var m2 = numAvg(num1, m1)
+
+            var a1 = num1
+            var Fa1 = equation(x3, x2, x1, x0, a1)
+            var Fm2 = equation(x3, x2, x1, x0, m2)
+
+            var Fm2Fa1 = parseFloat((Fm2*Fa1).toFixed(6))
+
+            var a2 = m2
+            var b2 = b1
+            var Fa2 = equation(x3, x2, x1, x0, a2)
+
+
+            var m3 = numAvg(a2, b2)
+            var Fm3 = equation(x3, x2, x1, x0, m3)
+
+            var Fm3Fa2 = parseFloat((Fm3*Fa2).toFixed(6))
+
+            var a3 = a2
+            var b3 = m3
+
+
+            var m4 = numAvg(a3,b3)
+            var d3 = Math.pow(0.5, 4) * Math.abs(num2 -num1)
+
+            var z3 = m4 + d3
+
+            var text = `
+                F(x) = (${x3})x<sup>3</sup> + (${x2})x<sup>2</sup> + (${x1})x<sup>1</sup> + (${x0})
+                <br>
+                a <sub>0</sub> = ${num1} ,
+                b <sub>0</sub> = ${num2}
+
+                <br><br>
+                F(a <sub>0</sub> ) = (${x3})(${num1})<sup>3</sup> + (${x2})(${num1})<sup>2</sup> + (${x1})(${num1})<sup>1</sup> + (${x0})
+                <br>
+                F(b <sub>0</sub> ) = (${x3})(${num2})<sup>3</sup> + (${x2})(${num2})<sup>2</sup> + (${x1})(${num2})<sup>1</sup> + (${x0})
+
+                <br><br>
+                F(a <sub>0</sub> ) = ${Fa0}
+                <br>
+                F(b <sub>0</sub> ) = ${Fb0}
+
+                <br><br>
+                F(a <sub>0</sub> ) F(b <sub>0</sub> ) = (${Fa0})(${Fb0}) = ${Fa0Fb0}
+
+                <br><br>
+                M<sub>1</sub> = (a<sub>0</sub> + b<sub>0</sub>) / 2
+                <br>
+                M<sub>1</sub> = ((${num1})+(${num2})) / 2 = ${m1}
+
+                <br><br>
+                <b>Step 2</b>
+                <br>
+                F(M <sub>1</sub> ) = (${x3})(${m1})<sup>3</sup> + (${x2})(${m1})<sup>2</sup> + (${x1})(${m1})<sup>1</sup> + (${x0})
+                <br>
+                F(M <sub>1</sub> ) = ${Fm1}
+                <br><br>
+                F(M <sub>1</sub> ) F(a <sub>0</sub> ) = (${Fm1})(${Fa0}) = ${Fm1Fa0}
+
+                <br><br>
+                a<sub>1</sub> = a<sub>0</sub> , b<sub>1</sub> = M<sub>1</sub>
+                <br>
+                a<sub>1</sub> = ${num1} , b<sub>1</sub> = ${m1}
+                <br><br>
+                ∴ ⋉∑ [${num1}, ${m1}]
+
+                <br><br>
+                M<sub>2</sub> = (a<sub>1</sub> + b<sub>1</sub>) / 2
+                <br>
+                M<sub>2</sub> = ((${a1})+(${b1})) / 2 = ${m2}
+
+                <br><br>
+                <b>Step 3</b>
+                <br>
+                F(M <sub>2</sub> ) = (${x3})(${m2})<sup>3</sup> + (${x2})(${m2})<sup>2</sup> + (${x1})(${m2})<sup>1</sup> + (${x0})
+                <br>
+                F(M <sub>2</sub> ) = ${Fm2}
+                <br><br>
+                F(M <sub>2</sub> ) F(a <sub>1</sub> ) = (${Fm2})(${Fa1}) = ${Fm2Fa1}
+
+                <br><br>
+                a<sub>2</sub> = M<sub>2</sub> , b<sub>2</sub> = b<sub>1</sub>
+                <br>
+                a<sub>2</sub> = ${m2} , b<sub>2</sub> = ${b1}
+                <br><br>
+                ∴ ⋉∑ [${m2}, ${b1}]
+
+                <br><br>
+                M<sub>3</sub> = (a<sub>2</sub> + b<sub>2</sub>) / 2
+                <br>
+                M<sub>3</sub> = ((${a2})+(${b2})) / 2 = ${m3}
+
+                <br><br>
+                <b>Step 4</b>
+                <br>
+                F(M <sub>3</sub> ) = (${x3})(${m3})<sup>3</sup> + (${x2})(${m3})<sup>2</sup> + (${x1})(${m3})<sup>1</sup> + (${x0})
+                <br>
+                F(M <sub>3</sub> ) = ${Fm3}
+                <br><br>
+                F(M <sub>3</sub> ) F(a <sub>2</sub> ) = (${Fm3})(${Fa2}) = ${Fm3Fa2}
+
+                <br><br>
+                a<sub>3</sub> = a<sub>2</sub> , b<sub>3</sub> = M<sub>3</sub>
+                <br>
+                a<sub>3</sub> = ${a2} , b<sub>3</sub> = ${m3}
+                <br><br>
+                ∴ ⋉∑ [${a2}, ${m3}]
+
+                <br><br>
+                <b>Step 5</b>
+                <br>
+                n = 3
+                <br>
+                Recall ⋉ ≏ x <sub>n</sub> = M <sub>n+1</sub> + d <sub>n</sub>
+                <br>where d <sub>n</sub> = (1/2) <sup>n+1</sup> |b <sub>0</sub> - a <sub>0</sub>|
+                <br>
+                ⋉ ≏ x <sub>3</sub> = M <sub>3+1</sub> + d <sub>3</sub>
+                <br>
+                x <sub>3</sub> = M <sub>4</sub> + d <sub>3</sub>
+
+                <br><br>
+                M<sub>4</sub> = (a<sub>3</sub> + b<sub>3</sub>) / 2
+                <br>
+                M<sub>4</sub> = ((${a3})+(${b3})) / 2 = ${m4}
+
+                <br><br>
+                d <sub>3</sub> = (1/2) <sup>3+1</sup> |${num2}-${num1}|
+                <br>
+                d <sub>3</sub> = ${d3}
+
+                <br><br>
+                ⋉ ≏ x <sub>3</sub> = M <sub>4</sub> + d <sub>3</sub>
+                <br>
+                ⋉ ≏ x <sub>3</sub> = (${m4}) + (${d3}) = ${z3}
+                <br><br>
+
+                Ans = ${z3} 
+            `;
+            
+            var answerSheet = document.getElementById("answerSheet")
+            var here = document.getElementById("here")
+
+            answerSheet.style.padding = "50px 20px 50px"
+            here.innerHTML = text
+
+
+
+            // console.log(Fa0)
+            // console.log(Fb0)
+            // console.log(Fa0Fb0)
+            // console.log(m1)
+            // console.log(Fm1)
+            // console.log(Fm1Fa0)
+
+            // console.log(m2)
+            // console.log(Fm2)
+            // console.log(Fm2Fa1)
+            // console.log(Fa2)
+
+            // console.log(m3)
+            // console.log(Fm3)
+            // console.log(Fm3Fa2)
+
+            // console.log(m4)
+            // console.log(d3)
+            // console.log(z3)
+            
+        }
+
+
+    </script>
+</html>
